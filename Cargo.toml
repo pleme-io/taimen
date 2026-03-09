@@ -17,6 +17,16 @@ codegen-units = 1
 strip = true
 
 [dependencies]
+# Pleme-io shared libraries
+kaname = { git = "https://github.com/pleme-io/kaname" }
+
+# MCP server (rmcp + schemars needed for derive macros used alongside kaname)
+rmcp = { version = "0.15", features = ["server", "transport-io"] }
+schemars = "0.8"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
 tokio = { version = "1", features = ["rt-multi-thread", "net", "sync", "macros", "signal", "fs"] }
 axum = { version = "0.8", features = ["ws"] }
 serde = { version = "1", features = ["derive"] }

@@ -2,6 +2,7 @@ pub mod api;
 pub mod app_state;
 pub mod config;
 pub mod error;
+pub mod mcp;
 pub mod media;
 pub mod participant;
 pub mod room;

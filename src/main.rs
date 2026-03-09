@@ -2,6 +2,8 @@
 //!
 //! ```text
 //! cargo run                             # start server on 0.0.0.0:8443
+//! cargo run -- server                   # explicit server subcommand
+//! cargo run -- mcp                      # MCP admin server (stdio)
 //! TAIMEN_PORT=3000 cargo run            # custom port
 //! RUST_LOG=debug cargo run              # with debug tracing
 //! ```
@@ -10,6 +12,7 @@ use std::net::SocketAddr;
 
 use axum::routing::get;
 use axum::Router;
+use clap::{Parser, Subcommand};
 use tower_http::cors::CorsLayer;
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::EnvFilter;
@@ -18,8 +21,40 @@ use taimen::api;
 use taimen::app_state::AppState;
 use taimen::signaling;
 
+#[derive(Parser)]
+#[command(name = "taimen", version, about = "Open-source video conferencing server")]
+struct Cli {
+    #[command(subcommand)]
+    command: Option<Commands>,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    /// Start the signaling server (default)
+    Server,
+    /// Start MCP admin server (stdio transport)
+    Mcp,
+}
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    let cli = Cli::parse();
+
+    match cli.command {
+        None | Some(Commands::Server) => {
+            run_server().await?;
+        }
+        Some(Commands::Mcp) => {
+            taimen::mcp::run()
+                .await
+                .map_err(|e| anyhow::anyhow!("MCP server error: {e}"))?;
+        }
+    }
+
+    Ok(())
+}
+
+async fn run_server() -> anyhow::Result<()> {
     // Initialise tracing
     tracing_subscriber::fmt()
         .with_env_filter(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")))
