@@ -6,6 +6,7 @@ pub mod mcp;
 pub mod media;
 pub mod participant;
 pub mod room;
+pub mod scripting;
 pub mod signal;
 pub mod signaling;
 pub mod storage;
