@@ -20,6 +20,7 @@ strip = true
 # Pleme-io shared libraries
 kaname = { git = "https://github.com/pleme-io/kaname" }
 soushi = { git = "https://github.com/pleme-io/soushi" }
+tsunagu = { git = "https://github.com/pleme-io/tsunagu" }
 
 # MCP server (rmcp + schemars needed for derive macros used alongside kaname)
 rmcp = { version = "0.15", features = ["server", "transport-io"] }

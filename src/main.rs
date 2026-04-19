@@ -81,8 +81,12 @@ async fn run_server() -> anyhow::Result<()> {
     tracing::info!("taimen signaling server listening on {addr}");
 
     let listener = tokio::net::TcpListener::bind(addr).await?;
+    // Drain coordinator from tsunagu — installs SIGTERM/SIGINT handlers once
+    // and hands out independent tokens. Upgrade over the previous ctrl_c-only
+    // handler: SIGTERM now triggers graceful drain under Kubernetes / systemd.
+    let drain = tsunagu::ShutdownController::install();
     axum::serve(listener, app)
-        .with_graceful_shutdown(shutdown_signal())
+        .with_graceful_shutdown(drain.token().wait())
         .await?;
 
     Ok(())
@@ -90,11 +94,4 @@ async fn run_server() -> anyhow::Result<()> {
 
 async fn health() -> &'static str {
     "ok"
-}
-
-async fn shutdown_signal() {
-    tokio::signal::ctrl_c()
-        .await
-        .expect("failed to install CTRL+C handler");
-    tracing::info!("shutdown signal received");
 }
