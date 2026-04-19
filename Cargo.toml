@@ -21,6 +21,7 @@ strip = true
 kaname = { git = "https://github.com/pleme-io/kaname" }
 soushi = { git = "https://github.com/pleme-io/soushi" }
 tsunagu = { git = "https://github.com/pleme-io/tsunagu" }
+shidou = { git = "https://github.com/pleme-io/shidou" }
 
 # MCP server (rmcp + schemars needed for derive macros used alongside kaname)
 rmcp = { version = "0.15", features = ["server", "transport-io"] }

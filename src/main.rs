@@ -15,7 +15,6 @@ use axum::Router;
 use clap::{Parser, Subcommand};
 use tower_http::cors::CorsLayer;
 use tower_http::trace::TraceLayer;
-use tracing_subscriber::EnvFilter;
 
 use taimen::api;
 use taimen::app_state::AppState;
@@ -55,10 +54,8 @@ async fn main() -> anyhow::Result<()> {
 }
 
 async fn run_server() -> anyhow::Result<()> {
-    // Initialise tracing
-    tracing_subscriber::fmt()
-        .with_env_filter(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")))
-        .init();
+    // Initialise tracing via shidou — honors RUST_LOG, defaults to info.
+    shidou::init_tracing();
 
     let jwt_secret =
         std::env::var("TAIMEN_JWT_SECRET").unwrap_or_else(|_| "taimen-dev-secret-change-me".into());
