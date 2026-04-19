@@ -66,8 +66,13 @@ async fn run_server() -> anyhow::Result<()> {
 
     let state = AppState::new(jwt_secret);
 
+    // Health/readiness/liveness via the shared tsunagu router (JSON
+    // responses, Unhealthy → 503 for K8s probes).
+    let health_checker: std::sync::Arc<dyn tsunagu::HealthChecker> =
+        std::sync::Arc::new(tsunagu::SimpleHealthChecker::new("taimen", env!("CARGO_PKG_VERSION")));
+
     let app = Router::new()
-        .route("/health", get(health))
+        .merge(tsunagu::axum::health_router::<AppState>(health_checker))
         .route("/ws/{room_id}", get(signaling::ws_handler))
         .merge(api::router())
         .layer(CorsLayer::permissive())
@@ -89,6 +94,3 @@ async fn run_server() -> anyhow::Result<()> {
     Ok(())
 }
 
-async fn health() -> &'static str {
-    "ok"
-}
