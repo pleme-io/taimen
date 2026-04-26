@@ -24,10 +24,8 @@
       toolName = "taimen";
       src = self;
       repo = "pleme-io/taimen";
-    }
-    // {
-      homeManagerModules.default = import ./module {
-        hmHelpers = import "${substrate}/lib/hm-service-helpers.nix" { lib = nixpkgs.lib; };
+      module = {
+        description = "Taimen (対面) — open-source video conferencing server";
       };
     };
 }
