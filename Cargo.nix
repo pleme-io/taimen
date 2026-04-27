@@ -2819,7 +2819,7 @@ rec {
         src = pkgs.fetchgit {
           url = "https://github.com/pleme-io/kaname";
           rev = "3cacac4d42c374f32481b3007ab78a6369c0c74e";
-          sha256 = "1kp9rh5pyn49pjcn9nf7x1vkm18vadr38hxx265hf077ljayr7ll";
+          sha256 = "0ih9na4yqqirbif9q24v31pkcgahvz6pbllpidp4ip3zrw52yakv";
         };
         dependencies = [
           {
@@ -6806,7 +6806,7 @@ rec {
         src = pkgs.fetchgit {
           url = "https://github.com/pleme-io/tsunagu";
           rev = "abc9944a8b0fc46db7d0f50e0fde9a4aeed8afb5";
-          sha256 = "021jsq6qxrg8zp9xn4i7r2rckdzgbjhan1gnzk8cslwlaxdxhbcj";
+          sha256 = "0mmp5a6qbnmdqxwsj37gmhyvaz6mx0axj101jlvbrhal69pvbagw";
         };
         dependencies = [
           {
