@@ -1,8 +1,8 @@
 {
-  "git+https://github.com/pleme-io/kaname#0.1.0": "0ih9na4yqqirbif9q24v31pkcgahvz6pbllpidp4ip3zrw52yakv",
-  "git+https://github.com/pleme-io/shidou#0.1.0": "1z5fb3vmd0yyqdffrz7pa4s25366bjq26gi8l6glyf38lbaqlzf9",
-  "git+https://github.com/pleme-io/shikumi#0.1.0": "02w3q7y82hhfnp47xbrdx93bbipq1p4jjvrn19rd7xbpadl9bcck",
-  "git+https://github.com/pleme-io/shikumi?branch=main#0.1.0": "124f7vs2ajglr4d6dch1gh2414byfaydz2h9p689475yqr7rm9da",
-  "git+https://github.com/pleme-io/soushi#0.1.0": "0m3cq0h2pm03p1z1pz7xgwrshzb3svbkx37ak8wnkrx4w4sb0xfv",
-  "git+https://github.com/pleme-io/tsunagu#0.1.0": "0mmp5a6qbnmdqxwsj37gmhyvaz6mx0axj101jlvbrhal69pvbagw"
+  "git+https://github.com/pleme-io/kaname#0.1.0": "0vzjlz35npca5ks8v2574kn4kh59l9z8mn7v33rykhjx6ql8jfc9",
+  "git+https://github.com/pleme-io/shidou#0.1.0": "1mr30yg7h5cd7783nj75ly7vl0jj0zi58syzl975mrnjwmbm0m1b",
+  "git+https://github.com/pleme-io/shikumi#0.1.0": "0jridislqn9ws9wrk8xy5ac235jpasvacg6jsf7yqd8hc4b3fddl",
+  "git+https://github.com/pleme-io/shikumi?branch=main#0.1.0": "0jridislqn9ws9wrk8xy5ac235jpasvacg6jsf7yqd8hc4b3fddl",
+  "git+https://github.com/pleme-io/soushi#0.1.0": "0r2ywrr0nrn9zhjbmml02w3hny46s5nc438yly9yrbykiqx5fzbk",
+  "git+https://github.com/pleme-io/tsunagu#0.1.1": "0a1qfl08ca6gllqkgb4lyjqrql3j3rif1dw1h3zp43is3nmajpin"
 }
