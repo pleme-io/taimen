@@ -17,6 +17,11 @@ codegen-units = 1
 strip = true
 
 [dependencies]
+# Configuration prime directive — TaimenConfig impls
+# shikumi::TieredConfig (bare/discovered/prescribed_default).
+# Operators reach via TAIMEN_TIER env var.
+shikumi = { git = "https://github.com/pleme-io/shikumi", branch = "main" }
+
 # Pleme-io shared libraries
 kaname = { git = "https://github.com/pleme-io/kaname" }
 soushi = { git = "https://github.com/pleme-io/soushi" }

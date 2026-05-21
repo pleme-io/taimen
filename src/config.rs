@@ -65,6 +65,30 @@ fn default_theme() -> String {
     "dark".into()
 }
 
+impl shikumi::TieredConfig for TaimenConfig {
+    /// Tier 0 — bare: zero-opinion floor. Empty server URL, empty
+    /// display name, empty video resolution, empty theme — documents
+    /// the minimum that won't try to connect anywhere or render
+    /// without an explicit operator choice.
+    fn bare() -> Self {
+        Self {
+            server_url: String::new(),
+            display_name: String::new(),
+            default_audio_muted: false,
+            default_video_muted: false,
+            video_resolution: String::new(),
+            theme: String::new(),
+        }
+    }
+
+    /// Tier 2 — prescribed: the curated taimen defaults shipped today
+    /// (ws://localhost:3000, "Anonymous", 1280x720, "dark"). Delegates
+    /// to Default for the single-source-of-truth invariant.
+    fn prescribed_default() -> Self {
+        Self::default()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -118,5 +142,53 @@ mod tests {
         // defaults still apply for fields not provided
         assert_eq!(cfg.server_url, "ws://localhost:3000");
         assert_eq!(cfg.video_resolution, "1280x720");
+    }
+}
+
+#[cfg(test)]
+mod tiered_tests {
+    use super::*;
+    use shikumi::{ConfigTier, TieredConfig};
+
+    #[test]
+    fn bare_is_zero_opinion() {
+        let b = <TaimenConfig as TieredConfig>::bare();
+        assert_eq!(b.server_url, "");
+        assert_eq!(b.display_name, "");
+        assert_eq!(b.video_resolution, "");
+        assert_eq!(b.theme, "");
+        assert!(!b.default_audio_muted);
+        assert!(!b.default_video_muted);
+    }
+
+    #[test]
+    fn prescribed_matches_default() {
+        let p = <TaimenConfig as TieredConfig>::prescribed_default();
+        let d = TaimenConfig::default();
+        assert_eq!(p.server_url, d.server_url);
+        assert_eq!(p.theme, d.theme);
+    }
+
+    #[test]
+    fn diff_bare_vs_default_is_non_empty() {
+        let b = <TaimenConfig as TieredConfig>::bare();
+        let d = <TaimenConfig as TieredConfig>::prescribed_default();
+        let diff = d.diff_against(&b);
+        assert!(
+            !diff.is_empty_diff(),
+            "bare and prescribed_default must differ"
+        );
+    }
+
+    #[test]
+    fn resolve_tier_dispatches() {
+        assert_eq!(
+            <TaimenConfig as TieredConfig>::resolve_tier(ConfigTier::Bare).server_url,
+            ""
+        );
+        assert_eq!(
+            <TaimenConfig as TieredConfig>::resolve_tier(ConfigTier::Default).server_url,
+            "ws://localhost:3000"
+        );
     }
 }
