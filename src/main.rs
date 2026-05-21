@@ -33,6 +33,8 @@ enum Commands {
     Server,
     /// Start MCP admin server (stdio transport)
     Mcp,
+    /// Show the materialized config at a tier (bare/default/discovered/custom/env).
+    ConfigShow(shikumi::cli::ConfigShowCommand),
 }
 
 #[tokio::main]
@@ -47,6 +49,10 @@ async fn main() -> anyhow::Result<()> {
             taimen::mcp::run()
                 .await
                 .map_err(|e| anyhow::anyhow!("MCP server error: {e}"))?;
+        }
+        Some(Commands::ConfigShow(cmd)) => {
+            cmd.run::<taimen::TaimenConfig>("TAIMEN_TIER")
+                .map_err(|e| anyhow::anyhow!(e))?;
         }
     }
 

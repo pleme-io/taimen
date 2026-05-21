@@ -20,7 +20,7 @@ strip = true
 # Configuration prime directive — TaimenConfig impls
 # shikumi::TieredConfig (bare/discovered/prescribed_default).
 # Operators reach via TAIMEN_TIER env var.
-shikumi = { git = "https://github.com/pleme-io/shikumi", branch = "main" }
+shikumi = { git = "https://github.com/pleme-io/shikumi", branch = "main", features = ["cli"] }
 
 # Pleme-io shared libraries
 kaname = { git = "https://github.com/pleme-io/kaname" }
