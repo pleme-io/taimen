@@ -8,6 +8,10 @@ description = "Taimen (対面) — open-source video conferencing: self-hostable
 keywords = ["video", "conferencing", "webrtc", "selfhosted", "gpu"]
 categories = ["multimedia", "web-programming"]
 
+
+[package.metadata.pleme]
+description = "Taimen (対面) — open-source video conferencing server"
+
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }
 
